@@ -1,0 +1,379 @@
+% Arquivo LaTeX de exemplo de artigo
+%
+% Criação: Jesús P. Mena-Chalco
+% Revisão: Fabio Kon e Paulo Feofiloff
+% Adaptação para UTF8, biblatex e outras melhorias: Nelson Lago
+%
+% Except where otherwise indicated, these files are distributed under
+% the MIT Licence. The example text, which includes the tutorial and
+% examples as well as the explanatory comments in the source, are
+% available under the Creative Commons Attribution International
+% Licence, v4.0 (CC-BY 4.0) - https://creativecommons.org/licenses/by/4.0/
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PREÂMBULO LaTeX %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Se você está escrevendo um artigo para algum periódico que fornece um
+% modelo LaTeX, é melhor usá-lo (e, se necessário, você pode copiar coisas
+% úteis deste modelo). Se não houver um modelo preexistente, você pode tentar
+% adaptar este para o formato esperado, mas essa não é uma tarefa trivial.
+%
+% A opção twoside (frente-e-verso) significa que a aparência das páginas pares
+% e ímpares pode ser diferente. Por exemplo, as margens podem ser diferentes ou
+% os números de página podem aparecer à direita ou à esquerda alternadamente.
+% Mas nada impede que você crie um documento "só frente" e, ao imprimir, faça
+% a impressão frente-e-verso.
+%
+% Aqui também definimos a língua padrão do documento
+% (a última da lista) e línguas adicionais.
+%\documentclass[12pt,twoside,brazilian,english]{article}
+\documentclass[12pt,twoside,english,brazilian]{article}
+
+% Ao invés de definir o tamanho das margens, vamos definir os tamanhos do
+% texto, do cabeçalho e do rodapé, e deixamos a package geometry calcular
+% o tamanho das margens em função do tamanho do papel. Assim, obtemos o
+% mesmo resultado impresso, mas com margens diferentes, se o tamanho do
+% papel for diferente.
+\usepackage[a4paper]{geometry}
+
+\geometry{
+  textwidth=152mm,
+  hmarginratio=12:17, % 24:34 -> com papel A4, 24mm + 152mm + 34mm = 210mm
+  textheight=237mm,
+  vmarginratio=8:7, % 32:28 -> com papel A4, 32mm + 237mm + 28mm = 297mm
+  headsep=11mm, % distância entre a base do cabeçalho e o texto
+  headheight=21mm, % qualquer medida grande o suficiente, p.ex., top - headsep
+  footskip=10mm,
+  marginpar=20mm,
+  marginparsep=5mm,
+}
+
+% Vários pacotes e opções de configuração genéricos; para personalizar o
+% resultado, modifique estes arquivos.
+\input{extras/basics}
+\input{extras/languages}
+\input{extras/fonts}
+\input{extras/floats}
+\input{extras/imeusp-formatting}
+\input{extras/index}
+\input{extras/bibconfig}
+\input{extras/hyperlinks}
+%\nocolorlinks % para impressão em P&B
+\input{extras/source-code}
+\input{extras/utils}
+
+% Diretórios onde estão as figuras; com isso, não é preciso colocar o caminho
+% completo em \includegraphics (e nem a extensão).
+\graphicspath{{figuras/},{logos/}}
+
+% Comandos rápidos para mudar de língua:
+% \en -> muda para o inglês
+% \br -> muda para o português
+% \texten{blah} -> o texto "blah" é em inglês
+% \textbr{blah} -> o texto "blah" é em português
+\babeltags{br = brazilian, en = english}
+
+% Espaçamento simples
+\singlespacing
+
+% Bibliografia
+\usepackage[
+  style=extras/plainnat-ime, % variante de autor-data, similar a plainnat
+  %style=alphabetic, % similar a alpha
+  %style=numeric, % comum em artigos
+  %style=authoryear-comp, % autor-data "padrão" do biblatex
+  %style=apa, % variante de autor-data, muito usado
+  %style=abnt,
+]{biblatex}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% METADADOS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% O arquivo com os dados bibliográficos para biblatex; você pode usar
+% este comando mais de uma vez para acrescentar múltiplos arquivos
+\addbibresource{bibliografia.bib}
+
+% Este comando permite acrescentar itens à lista de referências sem incluir
+% uma referência de fato no texto (pode ser usado em qualquer lugar do texto)
+%\nocite{bronevetsky02,schmidt03:MSc, FSF:GNU-GPL, CORBA:spec, MenaChalco08}
+% Com este comando, todos os itens do arquivo .bib são incluídos na lista
+% de referências
+%\nocite{*}
+
+% Estes comandos definem o título e autoria do trabalho e devem sempre ser
+% definidos, pois além de serem utilizados para criar a capa (com o comando
+% \maketitle), também são armazenados nos metadados do PDF. O estilo padrão
+% de diversos periódicos exige também outros dados, como email, filiação etc.
+\title{Trabalho de Conclusão de Curso}
+\author{
+  Primeiro Autor\thanks{Filiação do primeiro autor},
+  Segundo Autor\thanks{Filiação do segundo autor}
+}
+
+% O pacote hyperref armazena alguns metadados no PDF gerado (em particular,
+% o conteúdo de "\title" e "\author"). Também é possível armazenar outros
+% dados, como uma lista de palavras-chave ou o resumo.
+\hypersetup{
+  pdfkeywords={LaTeX, artigo},
+  pdfsubject={Uma variante do arquivo tese.tex usando a classe article.},
+}
+
+% É possível definir como determinadas palavras podem (ou não) ser
+% hifenizadas; no entanto, a hifenização automática geralmente funciona bem
+\babelhyphenation{documentclass latexmk soft-ware} % todas as línguas
+\babelhyphenation[brazilian]{Fu-la-no}
+\babelhyphenation[english]{what-ever}
+
+% Por padrão, article inclui a data atual; com este comando, você pode
+% definir uma data específica, inserir algum outro texto ou, deixando o
+% conteúdo em branco, removê-la.
+\date{}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% INÍCIO DO ARTIGO %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+% Gera a "capa" do artigo (geralmente, título, autor etc. sem que haja uma
+% quebra de página para o restante do conteúdo)
+\maketitle
+
+\begin{abstract}
+  Uma variante do arquivo \texttt{tese.tex} usando a classe \textsf{article}.
+\end{abstract}
+
+\section{Introdução}
+
+Se você precisa criar um texto relativamente curto, como um artigo ou
+um trabalho de disciplina, este modelo pode servir como base. Observe,
+no entanto, que periódicos em geral nas áreas de matemática e computação
+costumam ter seus próprios modelos \LaTeX{} (como é o caso da
+SBC\footnote{Sociedade Brasileira de Computação}\nocite{sbctemplate});
+nesses casos, é melhor utilizá-los e apenas consultar este modelo para
+verificar como usar algum recurso específico. Fique atento: alguns modelos
+antigos ou de periódicos internacionais podem usar \textsf{latin1} ao
+invés de \textsf{utf8} ou mesmo não ter configuração pré-definida para
+caracteres acentuados. Além disso, eles muito frequentemente utilizam
+bibtex ao invés de biblatex para a geração automática da bibliografia.
+
+\section{O Projeto Cpqs Abertas}
+
+O Projeto Cpqs-abertas, inicialmente conhecido como FAUaberta, teve suas origens como parte integrante da disciplina MAC 5716 - Laboratório de Programação Extrema, ministrada pelo Instituto de Matemática e Estatística (IME) da Universidade de São Paulo (USP). Seu embrião residia no desejo de alargar a exposição da produção intelectual da Faculdade de Arquitetura e Urbanismo (FAU), tornando-a mais acessível e visível, não só para a comunidade USP, mas também para acadêmicos de todas as partes do Brasil. Esta iniciativa estava enraizada no compromisso inabalável das universidades públicas de disseminar suas pesquisas e descobertas, delineando claramente seus impactos nos âmbitos social, econômico e tecnológico.
+
+Na fase inicial do Projeto Cpqs-abertas, ou FAUaberta, um componente essencial foi a extração de informações dos currículos Lattes dos docentes da FAU. Isso resultou na criação de um repositório rico em informações acadêmicas, tornando-se um dos pilares do projeto. No entanto, a verdadeira essência do sucesso do projeto reside na colaboração ativa e incansável de uma equipe diversificada, composta por estudantes e professores oriundos de diversos institutos da USP. Esse espírito colaborativo não apenas promoveu a coleta de dados de alta qualidade, mas também estabeleceu as bases para a evolução posterior do projeto.
+
+O ano de 2020 marcou um ponto crucial na história do projeto, com o lançamento da página FAUaberta. Nesse ponto, uma decisão estratégica fundamental foi tomada: a expansão do projeto para abranger outras unidades da USP. Dessa forma, o Cpqs-abertas tomou forma, incorporando não apenas a FAU, mas também o Instituto de Matemática e Estatística (IME) e a Faculdade de Economia, Administração e Contabilidade de Ribeirão Preto (FEARP) da USP. Esse movimento estratégico demonstrou a adaptabilidade do projeto, abrindo as portas para um crescimento contínuo e a inclusão de mais unidades da universidade.
+
+No entanto, com a chegada de novas unidades surgiram desafios de outra natureza. O principal deles era a presença de códigos replicados. Cada instituto mantinha seu próprio código-fonte, que, embora semelhante aos das outras unidades, resultava em duplicação de esforços e dificuldades na manutenção. Para contornar esse obstáculo, o Cpqs-abertas adotou a estratégia de "white label", conceito que será explicado em seções a seguir, e fez uso de um Sistema de Gerenciamento de Conteúdo (CMS). Essa abordagem revolucionária permitiu que as unidades compartilhassem o mesmo código, simplificando significativamente a adição de novas unidades e reduzindo o tempo necessário para desenvolver uma nova página, que agora mantinha uma consistência de design praticamente idêntica às demais unidades.
+
+A estratégia de "white label" e o uso de um Sistema de Gerenciamento de Conteúdo (CMS) revelaram-se pilares cruciais na evolução e eficiência do projeto Cpqs-abertas. Esses elementos técnicos desempenham um papel fundamental na unificação e manutenção contínua do projeto, permitindo que ele cumpra sua missão de disseminar conhecimento de forma eficaz e colaborativa.
+
+Ao adotar a abordagem "white label", o projeto conseguiu eliminar uma das barreiras mais significativas que surgem com a expansão para novas unidades. Tradicionalmente, cada instituto mantinha seu próprio código-fonte, resultando em uma complexidade desnecessária e em duplicação de esforços. A implementação da estratégia "white label" permitiu que todas as unidades compartilhassem uma base de código comum. Isso não apenas simplificou a adição de novas unidades à plataforma, mas também tornou mais eficiente a manutenção contínua. As atualizações e melhorias podem agora ser aplicadas de forma consistente em todas as páginas do projeto, garantindo uma experiência uniforme para os usuários.
+
+O papel central dos CMS na gestão do conteúdo do projeto não pode ser subestimado. Essas plataformas fornecem uma infraestrutura flexível que permite aos administradores e colaboradores adicionar, editar e organizar o conteúdo de maneira eficiente. Isso é especialmente valioso em um projeto de grande escala como o Cpqs-abertas, onde uma vasta quantidade de informações acadêmicas está sendo gerenciada e atualizada constantemente.
+
+A capacidade de personalizar e adaptar facilmente as páginas das diferentes unidades do projeto é um dos benefícios mais notáveis dos CMS. Cada unidade pode manter sua identidade visual única, mas ao mesmo tempo aproveitar as melhorias globais implementadas no projeto. Isso garante que a plataforma seja coesa e amigável, ao mesmo tempo que permite a expressão da individualidade de cada unidade da USP.
+
+Além disso, os CMS proporcionam uma base sólida para a integração de recursos avançados, como mecanismos de busca poderosos, análises de dados e recursos interativos. Isso torna o Cpqs-abertas não apenas uma fonte de informação estática, mas também uma ferramenta dinâmica para a pesquisa acadêmica, facilitando a descoberta de conteúdo relevante e a colaboração entre acadêmicos.
+
+À medida que o Projeto Cpqs-abertas continua a crescer e atrair mais unidades da USP, a importância dos CMS e da estratégia "white label" se torna ainda mais evidente. Esses elementos técnicos proporcionam a flexibilidade e a escalabilidade necessárias para sustentar uma plataforma de disseminação de conhecimento acadêmico em constante expansão. A próxima seção de nossa monografia explora a infraestrutura tecnológica subjacente com mais profundidade, revelando como esses componentes técnicos funcionam em conjunto para tornar o Cpqs-abertas uma realidade viável e eficaz.
+
+
+\section{CMS - White Label}
+\subsection{Definição e aplicações}
+
+\subsubsection{White Label}
+No contexto de mercado, a definição de White Label descreve uma terceirização do desenvolvimento de serviços, de produtos e, no caso desse projeto, de software. Em termos práticos, envolve um serviço base que posteriormente será personalizado e redistribuído para outras empresas com o possível propósito de poupar custos e recursos de produção. A maior vantagem que a prática oferece é flexibilizar a atribuição de responsabilidade do processo de criação e comercialização de um produto. A principal consequência é a economia de tempo, energia e dinheiro em termos de custos. Além disso, a definição não se restringe apenas a duas empresas. É possível, por exemplo, estabelecer três focos de responsabilidade –produção, marketing, vendas–, de forma que cada um seja atribuído a uma empresa distinta. Por exemplo, suponha que você possua uma loja de móveis artesanais de produção própria, o negócio vai bem, porém, a presença da sua marca na internet é nula e, sabendo disso, você pretende criar uma página para alavancar suas vendas criando uma loja virtual e aumentando a visualização do seu negócio com a divulgação, entretanto a falta de conhecimento no assunto e a mão de obra de alto custo se tornam impeditivos para continuar com a ideia, além disso, o tempo gasto na tarefa pode prejudicar a produção . É nesse contexto que se insere o White Label, ao invés de lidar com novas preocupações decide buscar no mercado alternativas e, dessa forma, acaba encontrando uma empresa terceirizada, especializada em desenvolvimento de sites. Ela lhe oferece uma estrutura para a página da sua loja, disponibilizando um modelo para que você insira sua marca da loja de móveis e possa realizar suas vendas. Este exemplo dá uma visão clara do que é um White Label pois estes softwares podem atender vastas necessidades como uma loja virtual, ou e-commerce, já que toda atualização técnica e a lógica de programação ficam a cargo da empresa desenvolvedora.
+
+Historicamente, o conceito tem raízes na indústria musical e na produção em massa comum a partir da década de 1950. Com o intuito de evitar gastos em registros não suficientemente lucrativos, as produtoras forneciam cópias “em branco” a DJs reconhecidos que, por sua vez, as tocavam em eventos para analisar a recepção do público. Essa análise era decisiva na escolha dos registros que seriam lançados oficialmente. O sucesso desse método acarretou a popularização do White Label. Atualmente, as principais áreas que adotam a prática são as indústrias de vestuário, de produtos alimentícios genéricos e de tecnologia financeira (FinTech).
+
+Para elucidar a presença do White Label nos diversos serviços e produtos da atualidade, no contexto de produtos genéricos alimentícios, a empresa WalMart e outros mercados adotam essa prática há tempos. É comum a presença de produtos personalizados com o logotipo do mercado onde são vendidos, todavia, esses estabelecimentos não são responsáveis pela manufatura do produto em questão. Além disso, no contexto de hardware, a Dell contrata a produção de seus monitores há anos, os quais são comercializados posteriormente sob propriedade dessa empresa. Por fim, as centrais de atendimento são majoritariamente conhecidas pela adoção do White Label.
+
+Em suma, uma empresa é responsável pelo primeiro nível de atendimento ao cliente, de forma genérica, e no caso de maior complexidade, ocorre o encaminhamento às centrais especializadas da empresa proprietária.
+
+Para as empresas contratadas, a maior facilidade adquirida envolve a expansão da oferta visto que é possível contornar o impacto do ingresso no mercado no qual marcas maiores e antigas exercem dominância. Em outras palavras, além de amenizar o risco de reprovação do produto, é possível fortalecer a presença da marca no mercado. Em contrapartida, a empresa proprietária poupa custos de produção e, por conseguinte, pode conduzir mais investimentos para o crescimento da empresa através do marketing e otimização de vendas. 
+Dado que a solidificação das marcas deve-se à presença no mercado quantitativamente e ao alcance do público alvo, o White Label permite tanto a oferta de produtos em escala, como o enfoque na divulgação e crescimento da empresa. Abaixo, segue exemplos de marcas e produtos que utilizam do white label no contexto de software:
+
+\begin{itemize}
+    \item {\bfseries Shopify}: Uma empresa que desenvolve software para lojas online, nela você pode criar e gerenciar sua loja virtual. A ideia foi baseada em um software anterior desenvolvido pelos próprios fundadores da Shopify que servia como loja virtual de snowboard à qual eles eram proprietários.
+
+    \item {\bfseries Zendesk}: Empresa de desenvolvimento de software que oferece uma plataforma para o serviço de atendimento ao cliente através de tickets. Há também o oferecimento personalizado destes pela empresa, de forma que a empresa contratante pode ter o seu próprio atendimento por tickets seguindo assim a ideia do white label.
+
+    \item {\bfseries WordPress}: Embora não seja um software em si, o site oferece um CMS, que está num núcleo de um software white label, que permite usuários criarem seu próprio site ou blog da forma que mais os agrada sem se preocupar com manutenção de código e outros cuidados exigidos por uma aplicação web
+\end{itemize}
+
+\subsubsection{Content Management System (CMS)}
+
+Um Sistema Gerenciador de Conteúdo (CMS) é uma aplicação usada, como diz o próprio nome, para gerenciar conteúdo, que permite criar, publicar e editar sem ter o conhecimento de linguagens de programação e a linguagem de marcação, HTML, em outras palavras, se você quisesse criar uma página do zero, como um blog, seria necessário ter um conhecimento básico em HTML, com o auxílio do CMS é possível criá-lo sem tais preocupações, pois, com o WordPress, um dos gerenciadores de conteúdo já citados previamente, é possível desenvolver sua página apenas com as ferramentas intuitivas disponibilizadas por ele, escolhendo estilo para fontes, posicionamento dos elementos, inserção de imagens e diversas outras opções. Diversos elementos de uma página online podem ser interpretados como o conteúdo, por exemplo, um simples texto, uma imagem, um vídeo ou até mesmo cores que a página possui.
+
+O núcleo de um CMS pode ser dividido em duas partes:
+\begin{itemize}
+    \item {\bfseries Content Management Application (CMA)}: O aplicativo que permite a inserção dos elementos da página, como texto, imagens, etc.
+
+    \item {\bfseries Content Delivery Application (CDA)}: O backend, que trata os elementos que você escolheu inserir na sua página web e os torna visiveis de forma responsiva ao visitante.
+\end{itemize}
+\subsection{No Software e no Projeto}
+No cenário da Tecnologia, os softwares white-label frequentemente são comercializados sob o modelo Software as a Service (SaaS). O SaaS é um modelo de entrega de software baseado na nuvem, onde os aplicativos são acessados por meio da internet. A principal característica dessa abordagem é a flexibilidade e acessibilidade global para os usuários, com atualizações automáticas e a capacidade de acessar aplicativos de qualquer lugar. No contexto do white label, o SaaS oferece às empresas a oportunidade de personalizar e comercializar serviços de software sob sua própria marca. Isso significa que as empresas podem adaptar completamente a aparência e identidade visual do aplicativo SaaS, incluindo o uso de seus próprios logotipos e esquemas de cores, criando uma experiência de marca consistente.
+Além disso, as empresas podem personalizar os recursos do aplicativo SaaS para atender a determinadas necessidades e as de seus clientes. Isso envolve a adaptação de funcionalidades específicas e a adição de recursos exclusivos que são relevantes para seu mercado ou setor. A grande vantagem é que as empresas que adotam uma solução SaaS white label podem revender ou distribuir o software sob sua própria marca, criando uma nova fonte de receita. Isso é particularmente útil para empresas que desejam expandir seus serviços sem gastar recursos no desenvolvimento de software personalizado.
+Essa abordagem também permite que as empresas se concentrem no atendimento às necessidades de seus clientes finais, fornecendo uma solução de software personalizada que atenda às demandas do mercado, em vez de gastar recursos no desenvolvimento de software desde o início. Como resultado, a relação entre SaaS e white label é altamente sinérgica, oferecendo flexibilidade, escalabilidade e oportunidades de negócios adicionais para empresas que desejam personalizar e comercializar serviços de software.
+
+O conceito de "white label" na indústria de tecnologia é uma estratégia que permite a empresas desenvolver produtos, serviços ou soluções e, em seguida, licenciar ou fornecer esses produtos para outras empresas, que têm a liberdade de personalizá-los e comercializá-los sob suas próprias marcas. Essa abordagem é valiosa para empresas que desejam ampliar sua oferta de tecnologia sem o ônus de desenvolver tudo internamente. Dessa forma, empresas de tecnologia muitas vezes disponibilizam software white label que pode ser adaptado e rebrandizado por outras empresas. Isso é particularmente evidente em setores como marketing digital, onde agências podem usar uma plataforma de automação de marketing white label e adaptá-la de acordo com as necessidades de seus clientes. Além do software, as plataformas white label são outro exemplo notável. Essas plataformas fornecem uma base sólida sobre a qual outras empresas podem construir produtos ou serviços personalizados. Por exemplo, uma empresa pode aproveitar uma plataforma de comércio eletrônico white label para criar uma loja online exclusiva para seus clientes, economizando tempo e recursos de desenvolvimento. Outra abordagem inclui empresas que fabricam hardware, como smartphones, que também adotam o white label. Elas permitem que outras empresas personalizem e comercializem esses dispositivos sob suas próprias marcas, aproveitando a infraestrutura já existente e adicionando valor aos produtos. Além disso, o white label é aplicado em setores de pagamento, segurança cibernética e serviços em nuvem, proporcionando flexibilidade e escalabilidade às empresas que desejam expandir suas ofertas tecnológicas sem o esforço de criação do zero. Empresas como Shopify, WordPress e Google Workspace são exemplos notáveis de sucesso na implementação de modelos white label, demonstrando a eficácia dessa estratégia na indústria de tecnologia. Em contrapartida, ao adotar produtos ou serviços white label na indústria de tecnologia, as empresas podem se deparar com desafios que requerem atenção cuidadosa. Um desses desafios é a dependência de fornecedores. Quando uma empresa escolhe essa abordagem, ela se torna intimamente ligada ao fornecedor original para manter e atualizar o produto ou serviço. Problemas financeiros, alterações nos termos contratuais ou a suspensão do suporte por parte do fornecedor podem afetar negativamente as operações da empresa cliente e a qualidade dos serviços oferecidos aos seus próprios clientes.Além disso, as limitações de personalização podem se mostrar um desafio. 
+
+Embora o white label ofereça flexibilidade para personalizar produtos ou serviços, existem restrições. Empresas podem se deparar com limitações na personalização de recursos essenciais, integração com outros sistemas ou adaptação completa à marca. Isso pode resultar em soluções que não atendem completamente às necessidades exclusivas da empresa cliente ou de seus clientes finais. Outro desafio é a competição e diferenciação. Quando várias empresas utilizam a mesma solução white label e realizam apenas personalizações superficiais, pode ser difícil para cada empresa se destacar e oferecer um valor exclusivo aos clientes, o que pode afetar sua vantagem competitiva. Além disso, o controle limitado sobre atualizações e desenvolvimento é uma preocupação. A empresa cliente pode não ter controle total sobre o cronograma de atualizações e desenvolvimento do produto ou serviço white label. Isso pode afetar a capacidade da empresa de responder rapidamente às necessidades do mercado ou de seus clientes, especialmente se o fornecedor não estiver alinhado com suas prioridades. Há também riscos associados à qualidade e segurança. A qualidade e a segurança dos produtos ou serviços white label dependem da competência e integridade do fornecedor original. Se o fornecedor não conseguir manter os padrões de qualidade ou segurança esperados, isso pode prejudicar a reputação da empresa cliente e a confiança de seus clientes.
+
+Por fim, custos ocultos podem surgir ao longo do tempo, apesar da economia inicial proporcionada pelo white label. Isso pode incluir taxas de licenciamento, custos de suporte ou custos de integração com outros sistemas, que podem impactar o orçamento da empresa cliente. Para lidar com esses desafios, é fundamental realizar uma análise minuciosa dos fornecedores, contratos e acordos de suporte. Além disso, é importante manter a flexibilidade e estar preparado para ajustar estratégias conforme necessário, como a possibilidade de mudar de fornecedor ou desenvolver recursos personalizados adicionais para atender às necessidades específicas dos clientes.
+
+\subsection{Benefícios do CMS}
+O desenvolvimento eficiente e eficaz de sites é um desafio central para empresas que desejam estabelecer uma presença sólida na web. Uma abordagem promissora para enfrentar esse desafio é a utilização de uma base de CMS (Sistema de Gerenciamento de Conteúdo) compartilhada para diversos sites. Nesta seção, serão exploradas as vantagens dessa estratégia, que incluem a economia de tempo e recursos, a padronização, a personalização flexível e a economia de custos. Outro ponto abordado serão os benefícios de atualizações simplificadas, gestão de conteúdo centralizada, escalabilidade e suporte técnico. Além disso, será discutido como essa abordagem pode manter a consistência da marca e acelerar o tempo de lançamento, ao mesmo tempo em que oferece flexibilidade para atender às necessidades individuais de cada projeto.
+
+A eficiência de desenvolvimento é uma das vantagens notáveis ao utilizar a mesma estrutura e funcionalidade do CMS (Sistema de Gerenciamento de Conteúdo) para vários sites. Essa abordagem economiza considerável tempo e esforço de desenvolvimento, eliminando a necessidade de criar um CMS personalizado para cada projeto. Dessa forma, é possível direcionar os recursos de forma mais eficaz, com enfoque em aprimorar e personalizar as partes específicas de cada site, ao invés de reinventar a roda no desenvolvimento do sistema de gerenciamento de conteúdo. Isso não apenas acelera a implementação de projetos, mas também promove uma abordagem mais consistente e eficaz para o gerenciamento de conteúdo em várias propriedades da web.
+
+Além disso, a padronização desempenha um papel crucial ao empregar a mesma base de CMS em todos os sites. Isso garante um alto padrão de qualidade, segurança e desempenho em todas as implementações, resultando em uma experiência consistente para os usuários. Essa consistência não apenas aumenta a confiança do usuário, mas também simplifica a manutenção e o gerenciamento contínuo. Essa uniformidade na qualidade é fundamental para estabelecer uma presença online sólida e confiável.
+
+Outro aspecto importante é a economia de custos que desempenha um papel significativo. Essa economia é substancial, uma vez que elimina a necessidade de desenvolver e manter um CMS personalizado para cada site. Além disso, o uso de uma solução white label pode frequentemente ser mais acessível em comparação com o desenvolvimento interno de um CMS completo, que envolve custos significativos de desenvolvimento, manutenção e atualizações contínuas. Dessa forma, as empresas podem otimizar seus recursos financeiros, direcionando-os para outras áreas críticas de seus projetos, enquanto ainda desfrutam de uma infraestrutura robusta de gerenciamento de conteúdo. Isso resulta em uma gestão financeira mais eficiente e um ROI (Retorno sobre Investimento) mais favorável para as empresas.
+
+Em relação à manutenção, atualizações simplificadas permitem que as atualizações de segurança, correções de bugs e melhorias de recursos sejam aplicadas de forma mais eficiente, uma vez que todos os sites estão construídos sobre uma única base CMS compartilhada. Isso simplifica o processo de manutenção, pois as atualizações podem ser aplicadas de forma centralizada, garantindo que todos os sites se beneficiem das últimas melhorias sem a necessidade de lidar com atualizações individuais para cada site. Isso não apenas economiza tempo, mas também fortalece a segurança e o desempenho geral, proporcionando uma gestão mais eficaz dos sites da empresa. No geral, a gestão de conteúdo centralizada é uma das vantagens-chave , visto que o gerenciamento de conteúdo para todos os sites pode ser conduzido a partir de um único local, simplificando consideravelmente o processo de atualização e publicação de conteúdo. Isso significa que as equipes de conteúdo podem gerenciar, editar e publicar informações em todos os sites de forma eficiente e consistente, sem a necessidade de acessar sistemas separados para cada propriedade da web. Essa centralização do controle facilita a manutenção da precisão e da coesão do conteúdo em todos os sites, proporcionando uma gestão de conteúdo mais eficaz e economia de tempo para a empresa.
+
+A escalabilidade é uma das principais vantagens quando se utiliza uma base de CMS compartilhada para vários sites, haja vista que permite que você expanda facilmente o número de sites que utilizam a mesma base CMS à medida que o seu negócio cresce, tudo isso sem a necessidade de recriar a infraestrutura do CMS para cada novo site. Isso significa que você pode adicionar novos sites à sua rede online de forma ágil e eficiente, aproveitando a estrutura e funcionalidade já estabelecidas. Essa flexibilidade é crucial para plataformas em crescimento, pois permite acompanhar a expansão do seu portfólio de sites de maneira eficaz, economizando tempo e recursos que, de outra forma, seriam gastos na criação de CMS individuais para cada novo projeto.
+
+Mesmo no contexto de escalabilidade, a consistência da marca é mantida. É possível manter a uniformidade na identidade visual e elementos-chave de design em todos os projetos. Ao compartilhar a mesma base de CMS, as plataformas podem garantir que a marca seja representada de maneira consistente em todos os sites, mantendo logotipos, cores, tipografia e outros elementos de design alinhados. Essa uniformidade fortalece a identidade da marca, cria confiança nos visitantes e oferece uma experiência de usuário coesa em todas as propriedades da web. Além disso, simplifica o processo de atualização de elementos de marca em todos os sites, garantindo que qualquer alteração seja refletida de forma consistente em toda a presença online da empresa.
+
+Uma das vantagens fundamentais do uso de um CMS no contexto do Cpqsabertas é o fato de ser “user-friendly”, isto é, de fácil entendimento e intuitivo, tendo em vista que estamos constantemente em contato com designers, eles, como usuários do gerenciador de conteúdo, não precisam entender profundamente de código e linguagens de programação para contribuir com alterações como cores, escolhas de logos, textos e estilos no geral. O código que está por trás do CMS já cuida disso ao preencher os campos criados pelos desenvolvedores.
+
+Por fim, garante-se a rapidez no tempo de lançamento. Com a infraestrutura do CMS construída, é possível lançar novos sites de forma significativamente mais rápida. Isso resulta em economia de tempo substancial e permite que seus clientes entrem no mercado mais cedo, ganhando uma vantagem competitiva valiosa. 
+
+No entanto, é importante estar ciente de que a flexibilidade pode ser limitada ao adotar essa abordagem. Para abordar essa desvantagem, uma possível solução é implementar módulos de personalização que permitam a adaptação de recursos específicos para atender às necessidades individuais de cada projeto, mantendo ao mesmo tempo a eficiência geral do CMS compartilhado. Dessa forma, pode-se equilibrar a rapidez no lançamento com a capacidade de personalizar e atender às demandas exclusivas de seus clientes.
+
+\section{Arquitetura Antiga}
+
+A arquitetura estava, dividida em três partes: o banco de dados PostgreSQL, o back-end em Django e o front-end em React, em que cada uma estava em um mesmo repositório. Sendo que cada instituto possuía o seu próprio código e a sua própria instância para o banco de dados, também eram criados containers docker para cada camada da arquitetura, o que gerava três containers, um para o front-end, outro para o back-end e o ultimo para o banco de dados. Esses containers eram instanciados no sistema de cloud da AWS chamado EC2, onde são criado maquinas virtuais para a sua aplicação, assim, uma unica VM(máquina virtual) era responsável por ter o back-end, front-end e o banco de dados de um determinado instituto. Em termos técnicos, o sistema anterior era completamente baseado em uma arquitetura monolítica, no qual o front-end e o back-end ficam fortemente acoplados em um único código fonte.
+
+A figura a seguir exibe, de forma geral, a estrutura do sistema para um instituto:
+
+\begin{figure}[!htb]
+\centering
+\includegraphics[width=1\textwidth]{figuras/arquitetura_antiga.pdf}
+\caption{Estrutura geral antiga}
+\label{estrutura_antiga}
+\end{figure}
+
+Considerando o modelo de arquitetura em \ref{estrutura_antiga}, o processo de inserção de um novo instituto exigia replicação total do código: front-end, back-end e a criação de um novo banco de dados separado. Isso fez com que cada front-end fosse criado separadamente e desenvolvido pequenas particularidades, porém os códigos fonte seguiam um modelo e continham grande parte replicada entre os institutos. Já no back-end, também havia a necessidade de que a cada novo instituto fosse criada, também, uma nova instância com código exatamente igual aos anteriores. O mesmo vale para o banco de dados, ou seja, era criada mais uma instância para cada instituto novo.
+
+Essa estrutura de código replicado gerou diversos problemas. A manutenção do projeto tendia a ficar cada vez mais complicada, trabalhosa e propensa a erros, visto que a cada mudança era necessário alterar cada instância de código separadamente. Por exemplo, caso fosse necessário inserir um botão novo em todos os sites, deveria-se alterar cada código fonte individualmente, o que gerou um grande problema para a manutencao dos sites. 
+
+Com a arquitetura antiga foram criados sites para três institutos diferentes: FAU, IME e FEARP, o que tornou necesário o uso de três instâncias de máquinas virtuais na AWS. Dessa forma, houve um aumento de custo, uma vez que era necessário criar outra máquina virtual sempre que fosse inserido outro insituto no projeto. Segundo o pensamento de escalabilidade horizontal, isso era uma qualidade do projeto, porém percebeu-se que a demanda back-end era muito pequena, logo não seria necessário uma máquina virtual apenas para executar o back end.  
+A figura a seguir segue como as máquinas vituais estavam dispostas na AWS.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=1\linewidth]{figuras/arqtuitera_antiga_institutos.pdf}
+    \caption{Estrutura antiga com os institutos que foram criados}
+    \label{fig:arquitetura-antiga}
+\end{figure}
+
+Outra problemática existente na abordagem da arquitetura monolítica é a questão da segurança. A manutenção de todos os componentes agrupados em um único código base significa o compartilhamento do mesmo contexto de segurança. Em outra palavras, resulta em uma superfície de ataque maior, visto que uma vunerabilidade em uma parte do sistema pode comprometer toda a plataforma.
+
+Em suma, a própria arquitetura era um empecilio para escalar o projeto, além de todas as dificuldades burocráticas relacionadas à obtenção de dados. Os custos acoplados à inserção de novas unidades englobavam valores monetários (AWS), trabalho desnecessário por parte dos desenvolvedores e tempo a ser dedicado. 
+
+
+\section{Arquitetura Atual}
+
+Visando corrigir esses problemas, buscou-se criar uma nova arquitetura que desacoplasse as diferentes partes do projeto. Primeiramente, separou-se o back-end e o front-end em diferentes repositórios, para aprimorar a organização do projeto. O sistema que oferecia maiores benefícios ao analisar os objetivos do projeto era a arquitetura Headless, na qual o front-ent seria responsável pela interface de usuário e o back-end pelo CMS e a lógica de negócios.
+
+Antigamente, havia um banco de dados para cada instituto e que era gerado dentro de um container docker, agora esses banco de dados individuais foram acoplados em uma unica estrutura, utilizando outra tecnologia chamada RDS da amazon, que armazena banco de dados postgresSQL.
+
+Esta nova estrutura de bancos de dados agregados, possibilitou que o back-end fosse também unificado, pois as requisições vindas dos sites poderiam ser filtradas, o que permitiu o back-end ser direcionado para qual banco de dados iria usar para as diferente tipos de queries.
+
+Os diferentes back-ends e banco de dados que eram criados para cada instituto foram unificados, ou seja, os sites dos institutos poderiam requistar dados de uma mesma API, o que levou a se ter apenas uma VM na aws executando o back-end, o que também diminuiu os custos e facilitou o processo de manutenção.
+
+Foi criado um nova camada para o CMS utilizando Strapi, que era responsável por gerir os estilos e estados dos diferentes sites, nele era possivel armazenar os designs de cada site e altera-los em tempo de execução. Em outras palavras, ele possibilitou a unificação do código-fonte do front-end, o que tornou possível criar páginas diferentes utilizando a mesma estrutura. Essa nova arquitetura gerou uma facilidade na inserção de novos intitutos, além de ajudar na manutencao dos que ja existiam.
+
+A figura a seguir \ref{fig:arquitetura-nova} representa essa nova estrutura com os antigos insitutos. 
+
+\begin{figure}
+    \centering
+    \includegraphics[width=1\linewidth]{figuras/nova_arquitetura.drawio-_1_.pdf}
+    \caption{Estrutura novas com os institutos que foram criados}
+    \label{fig:arquitetura-nova}
+\end{figure}
+
+Pela análise das imagens \ref{fig:arquitetura-antiga} e \ref{fig:arquitetura-nova}, é possivel entender melhor a questao da unificação, em que temos um front-end que faz uma requisição para o CMS, o que gera os diferentes designs pros instituos. Quando o site é gerado, ocorre uma requisição para o back-end dos dados referentes ao instituto em questão, o que direciona a API para o banco de dados adequado.
+
+Atualmente, para instanciar o front-end é utilizado o servico da amazon S3, que possui a função de armazenar arquivos e hospedar sites estáticos, que é o caso do projeto, em que é utilizado ReactJS.
+Para a hospedagem basta utilizar a funcionalidade de build do framework, que gera um código html e, em seguida, enviar para o serviço de armazenamento da Amazon. Assim, não é mais necessário utilizar um container e uma VM para executar o front-end. 
+
+Portanto na arquitetura nova, ocorre a build do código, que é o mesmo para todos os institutos, sendo a única diferença a especificação na variável ambiente de qual instituto se esta fazendo o processo.Logo no novo esquema, o layout do site eh criado em tempo de execucao, isto eh, quando os estilos do front-end sao gerados assim que o usuario decide utilizar a pagina que deseja.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{figuras/variaveis_ambiente.pdf}
+    \caption{Variáveis  ambientes utilizadas para gerar os sites}
+    \label{fig:arquitetura-nova}
+\end{figure}
+
+Na figura acima a variavel REACT\_APP\_INSTITUTE refere a qual banco de dados sera utilizado nas requisicoes pro back-end e REACT\_APP\_CMS ao instituto que sera utilizado pelo CMS para gerar os estilos. Nesse exemplo da imagem eh criado o site da FAU junto com os dados especicos dele.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.75\linewidth]{figuras/variaveis_ambiente_exFAU.pdf}
+    \caption{Variáveis  ambientes com valores para FAU}
+    \label{fig:arquitetura-nova}
+\end{figure}
+
+Agora quando eh trocado os valores dessa variaveis para os referentes ao IME, o site eh criado com os estilos do novo instituto, utilizando o mesmo codigo-fonte, como eh demonstrado na figura abaixo.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.75\linewidth]{figuras/variaveis_ambiente_exIME.pdf}
+    \caption{Variáveis  ambientes com valores para o IME}
+    \label{fig:arquitetura-nova}
+\end{figure}
+
+\printbibliography[
+  %title=\refname\label{bibliografia}, % "Referências", recomendado pela ABNT
+  %title=\refname={}\label{bibliografia}, % "Bibliografia"
+]
+
+\section{Novas Tecnologias Utilizadas}
+\subsubsection{Strapi}
+A principal ambição do projeto, para o ano de 2023, era de implementar uma forma de escalar o número de institutos (sites), utilizando menos recurso e esforço humano. Com isso, algumas tecnologias, até então aplicadas, acabaram se mostrando insuficientes e portando foram implementadas novas ferramentas, sendo a principal, o Strapi. 
+
+Trata-se de  um Serviço de Gerenciamento de Conteúdo (Content Management Service, ou CMS, em inglês) open-source e headless, ele permite ao usuário, através de uma interface gráfica simples e direta, criar APIs em Javascript. Neste caso, o Strapi foi aplicado com a finaliade de diminuir o esforço humano de criar um codigo-fonte de front end para cada instituto, com ele devidamente implementado, podemos designar a tarefa de gerar novos sites aos designers, uma vez que não é necessário conhecimento técnico avançado para utilizar a interfaçe gráfica da nova ferramenta introduzida.
+
+
+ É importante ressaltar que o strapi não a unico método considerado, um grande concorrente já consolidado é o WordPress, mas após analises as vantagens do strapi se sobressaíram. Em primeiro lugar, a flexibilidade tecnológica do Strapi destaca-se como um fator crucial. Sendo um CMS headless, o Strapi permite uma integração mais harmoniosa com diferentes tecnologias no frontend. Essa vantagem é especialmente significativa para projetos que demandam uma arquitetura personalizada e modular, como aplicativos móveis ou interfaces que vão além dos tradicionais sites construídos com WordPress, conhecido por sua associação com temas específicos e o uso de PHP.
+
+A arquitetura headless do Strapi é particularmente relevante para aplicações modernas e distribuídas, proporcionando uma base sólida para o desenvolvimento de interfaces mais dinâmicas e avançadas. Em contrapartida, o WordPress, embora tenha avançado no sentido headless, frequentemente mantém sua reputação como uma plataforma associada a uma arquitetura monolítica, mais típica de sites tradicionais.
+
+A capacidade de personalização e escalabilidade é outro ponto distintivo. O Strapi oferece um alto grau de personalização, permitindo a adaptação da estrutura de dados, modelos e APIs de acordo com as exigências específicas do projeto. Sua escalabilidade facilita a adaptação a projetos de diferentes tamanhos. O WordPress, embora altamente personalizável, pode apresentar desafios em personalizações mais avançadas, muitas vezes limitadas pela natureza centralizada da plataforma.
+
+No que diz respeito ao controle sobre o frontend, o Strapi proporciona uma liberdade total na escolha das tecnologias e ferramentas para a interface do usuário. Em contrapartida, o WordPress, apesar de sua ampla variedade de temas, pode oferecer um controle menos abrangente sobre o frontend, especialmente em casos que demandam soluções altamente personalizadas.
+
+A agilidade no desenvolvimento e a capacidade de prototipagem rápida são considerações adicionais. A interface amigável do Strapi e sua capacidade de desenvolvimento rápido de protótipos o tornam uma escolha ágil para projetos que exigem iterações frequentes. Embora o WordPress seja reconhecido por sua amigabilidade, personalizações mais complexas podem ser desafiadoras, especialmente quando se busca criar algo além de um site convencional.
+
+Por fim, a comunidade e o suporte desempenham um papel crucial na decisão. O Strapi possui uma comunidade ativa em crescimento, fornecendo suporte constante e contribuições significativas. O WordPress, com uma das maiores comunidades de CMS, oferece uma vasta gama de plugins e temas, embora a natureza mais tradicional da plataforma possa limitar algumas opções em determinados casos.
+
+Em suma, ao escolher o Strapi em detrimento do WordPress, a decisão é fundamentada na busca por flexibilidade tecnológica, arquitetura headless para aplicações modernas, personalização e escalabilidade, controle sobre o frontend, agilidade no desenvolvimento e suporte comunitário. Avaliar cuidadosamente esses fatores em relação aos requisitos específicos do projeto e às metas desejadas garantirá uma escolha informada e alinhada com os objetivos da equipe de desenvolvimento.
+\subsubsection{Como utilizar}
+Um treinamento básico para a utilização do strapi foi realizado com estudantes de design da Faculdade de Arquitetura e Urbanismo da Universidade de São Paulo, segue uma explicação similar.
+
+Como criar um novo instituto:
+
+Como mudar cores:
+
+Como mudar logotipos:
+
+Como mudar fontes: 
+
+Como criar um departamento:
+
+
+
+
+\end{document}
